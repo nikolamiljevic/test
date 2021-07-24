@@ -13,19 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 
+
 Route::middleware(['auth'])->group(function () {
    
-    Route::get('/', 'BlogController@index')->name('blogs');
-
+    Route::get('/blogs', 'BlogController@index')->name('blogs');
+    Route::get('/blog/{id}', 'BlogController@show')->name('blog.show');
+    Route::post('/delete/comment/{id}', 'CommentController@destroy')->name('comment.delete');
+    Route::post('/comment/create', 'CommentController@create')->name('comment.create');
+    Route::get('/profile', 'UserController@profile')->name('profile');
 });
 
 

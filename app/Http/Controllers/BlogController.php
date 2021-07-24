@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\r;
 use Illuminate\Http\Request;
+use App\Models\Blog;
 
 class BlogController extends Controller
 {
@@ -15,7 +16,9 @@ class BlogController extends Controller
     public function index()
     {
         
-       return view('blogs');
+       $blogs =  Blog::with('user')->get();
+
+       return view('blogs',compact('blogs'));
     }
 
     /**
@@ -45,9 +48,10 @@ class BlogController extends Controller
      * @param  \App\Models\r  $r
      * @return \Illuminate\Http\Response
      */
-    public function show(r $r)
+    public function show($id)
     {
-        //
+        $blog =  Blog::with('user','comments')->where('id',$id)->first();
+        return view('single-blog',compact('blog'));
     }
 
     /**

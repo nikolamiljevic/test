@@ -12,8 +12,7 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         //
     }
 
@@ -22,9 +21,17 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(Request $request) {
+
+        $data = $request->validate([
+            'body'=>'required|max:50',
+            'user_id'=>'required',
+            'blog_id'=>'required'
+        ]);
+  
+        
+        Comment::insert($data);
+        return redirect()->back()->with('message','Comment added');
     }
 
     /**
@@ -33,8 +40,7 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         //
     }
 
@@ -44,8 +50,7 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
-    {
+    public function show(Comment $comment){
         //
     }
 
@@ -78,8 +83,12 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
-    {
-        //
+    public function destroy($id)
+    {   
+       
+        if(Comment::find($id)->delete()){
+           return redirect()->back()->with('message','Comment deleted');
+        }
+
     }
 }
