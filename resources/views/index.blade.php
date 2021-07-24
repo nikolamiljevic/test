@@ -39,11 +39,10 @@
                     @endauth
                 </div>
             @endif
-            @yield('all-blogs')
+                @yield('all-blogs')
                 @yield('single-blog')
-
-
-
+                @yield('profile')
+                @yield('admin')
             </div>
         </div>
     </body>

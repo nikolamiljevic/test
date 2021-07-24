@@ -26,9 +26,17 @@ class BlogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        
+        $data = $request->validate([
+            'body'=>'required',
+            'title'=>'required',
+            'user_id'=>'required'
+        ]);
+        
+        Blog::insert($data);
+        return redirect('profile')->with('message','Blog created successfully');
     }
 
     /**
@@ -39,7 +47,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      
     }
 
     /**
@@ -60,9 +68,10 @@ class BlogController extends Controller
      * @param  \App\Models\r  $r
      * @return \Illuminate\Http\Response
      */
-    public function edit(r $r)
+    public function edit($id)
     {
-        //
+        $blog =  Blog::with('user')->where('id',$id)->first();
+        return view('blog-edit',compact('blog'));
     }
 
     /**
@@ -72,9 +81,15 @@ class BlogController extends Controller
      * @param  \App\Models\r  $r
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, r $r)
+    public function update(Request $request)
     {
-        //
+        $data = $request->validate([
+            'body'=>'required',
+            'title'=>'required',
+        ]);
+        
+        Blog::where('id',$request['blog_id'])->update($data);
+        return redirect('profile')->with('message','Blog updated successfully');
     }
 
     /**
@@ -83,8 +98,10 @@ class BlogController extends Controller
      * @param  \App\Models\r  $r
      * @return \Illuminate\Http\Response
      */
-    public function destroy(r $r)
+    public function destroy($id)
     {
-        //
+        if(Blog::find($id)->delete()){
+            return redirect()->back()->with('message','Blog deleted');
+         }
     }
 }
