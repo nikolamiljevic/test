@@ -22,9 +22,5 @@ class UserController extends Controller
 
         return view('admin',compact('blogs'));
     }
-    
-    public function logout(Request $request) {
-        Auth::logout();
-        return redirect('/login');
-      }
+
 }
