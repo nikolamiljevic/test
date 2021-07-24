@@ -1,5 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{{url('profile')}}">
+<nav class="navbar  navbar-expand-lg fixed-top navbar-light bg-light">
+ 
+  <a class="navbar-brand" href="{{url('profile')}}">
       {{Auth::user()->name}}
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,7 +11,14 @@
       <ul class="navbar-nav mr-auto">
       
         <li class="nav-item">
-          <a class="nav-link" href="#">Admin</a>
+          <a class="navbar-brand" href="{{url('admin')}}">
+            Admin
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="navbar-brand" href="{{url('blogs')}}">
+            Home
+          </a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -20,10 +28,13 @@
 
             <form method="POST" action="{{ route('logout') }}">
               @csrf
-              <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
-              <a class="dropdown-item" href="">Logout</a>
-            </form>
-           
+
+              <x-responsive-nav-link :href="route('logout')"
+                      onclick="event.preventDefault();
+                                  this.closest('form').submit();">
+                  {{ __('Log Out') }}
+              </x-responsive-nav-link>
+          </form>
             <div class="dropdown-divider"></div>
           
           </div>

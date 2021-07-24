@@ -16,4 +16,15 @@ class UserController extends Controller
         return view('profile',compact('blogs'));
     }
 
+    public function admin() {
+
+        $blogs = Blog::with('comments')->get();
+
+        return view('admin',compact('blogs'));
+    }
+    
+    public function logout(Request $request) {
+        Auth::logout();
+        return redirect('/login');
+      }
 }

@@ -14,11 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-
 
 Route::middleware(['auth'])->group(function () {
    
@@ -34,8 +29,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/comment/create', 'CommentController@create')->name('comment.create');
 
     Route::get('/profile', 'UserController@profile')->name('profile');
+    Route::get('/admin', 'UserController@admin')->name('admin')->middleware('admin');
     
 });
 
+Route::get('logout-redirect', 'UserController@logout')->name('logout-redirect');
 
 require __DIR__.'/auth.php';

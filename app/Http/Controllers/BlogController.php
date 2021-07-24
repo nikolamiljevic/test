@@ -71,6 +71,7 @@ class BlogController extends Controller
     public function edit($id)
     {
         $blog =  Blog::with('user')->where('id',$id)->first();
+ 
         return view('blog-edit',compact('blog'));
     }
 
@@ -83,12 +84,14 @@ class BlogController extends Controller
      */
     public function update(Request $request)
     {
+        
         $data = $request->validate([
             'body'=>'required',
             'title'=>'required',
         ]);
         
         Blog::where('id',$request['blog_id'])->update($data);
+     
         return redirect('profile')->with('message','Blog updated successfully');
     }
 
@@ -100,6 +103,7 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
+
         if(Blog::find($id)->delete()){
             return redirect()->back()->with('message','Blog deleted');
          }
